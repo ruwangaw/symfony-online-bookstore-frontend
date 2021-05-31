@@ -1,0 +1,16 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true" style="font-size: 15px;">
+    <mat-icon class="close-icon" color="warn" style="font-size: 15px;">X</mat-icon>
+</button>
+<h4>{{bookViewed.title}}</h4>
+<hr>
+<section>
+    <form fxLayout="column" [formGroup]="bookViewFrm">
+        <mat-form-field class="w-100">
+            <input type="text" id="bookCount" placeholder="Book Count" matInput formControlName="bookCount">
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="w-100">
+            <button type="reset" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+            <button type="submit" mat-raised-button color="primary" (click)="onAddToCart()">Add to Cart</button>
+        </div>
+    </form>
+</section>

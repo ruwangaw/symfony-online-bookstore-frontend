@@ -1,0 +1,26 @@
+<section class="page-wrapper" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
+    <mat-card fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style="background-color:bisque;">
+        <div *ngIf="shoppingCartBooks && shoppingCartBooks.length > 0">
+            <ul>
+                <li *ngFor="let book of shoppingCartBooks">
+                    <!-- <img class="card-img-top" src="{{item.image}}" alt="Card image cap"> {{item.name}} -->
+                    <p>{{book.book.title}}({{book.book.price| currency:'LKR'}})X{{book.bookCount}}</p>
+                    <span>{{book.netBookAmount | currency:'LKR'}}</span>
+                    <button type="button" class="close" aria-label="Remove Item" (click)="onClickRemoveItemFromCart(book)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </li>
+            </ul>
+            <div>
+                <div>
+                    <strong class="d-block">Net Total Amount:</strong>
+                    <span class="d-block">{{netTotalAmmount | currency:'LKR'}}</span>
+                </div>
+                <div>
+                    <button mat-button type="button" class="warn" (click)="onEmptyCart()">Empty Cart</button>
+                    <button mat-button type="button" class="primary" (click)="onCheckoutCart()">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</section>
