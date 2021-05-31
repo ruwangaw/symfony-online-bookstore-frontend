@@ -1,23 +1,26 @@
 <section class="page-wrapper" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
-    <mat-toolbar fxLayout="column wrap" fxLayoutGap="10px" class="symfony-main-toolbar" color="primary">
-        <div fxFlex="80%" fxLayoutAlign="start center" fxLayout="row wrap" fxLayoutGap="10px">
+    <!-- <div fxFlex="100%" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start" style="background-color: brown;"> -->
+    <mat-toolbar class="symfony-main-toolbar" fxFlex="100%" fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px" color="primary">
+        <div>
             <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [matMenuTriggerFor]="booksCategories">
-        <mat-icon>menu</mat-icon>
-      </button>
+                <mat-icon>menu</mat-icon>
+            </button>
             <mat-menu #booksCategories="matMenu">
                 <button mat-menu-item (click)="onMenuSelected(-1)">Any Category</button>
                 <button mat-menu-item *ngFor="let category of categories" (click)="onMenuSelected(category)">{{category.name}}</button>
             </mat-menu>
         </div>
-        <div fxFlex="20%" fxLayoutAlign="end center" fxLayout="row wrap" fxLayoutGap="10px">
+        <div>
             <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="onShoppingCartClick()">
-        <mat-icon>shopping_cart</mat-icon>
-      </button>
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
         </div>
     </mat-toolbar>
-    <div fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center start">
-        <app-books-store-search fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center start"></app-books-store-search>
+    <!-- </div> -->
+    <div fxFlex="100%" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
+        <app-books-store-search fxLayout="row wrap" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start">
+        </app-books-store-search>
 
-        <app-books-store-list fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center start" [childCategory]="selectedCategory"></app-books-store-list>
+        <app-books-store-list fxLayout="row wrap" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start" [childCategory]="selectedCategory"></app-books-store-list>
     </div>
 </section>

@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [],
@@ -27,6 +28,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     MatDialogModule,
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
+    FlexLayoutModule
   ],
   exports:[
     CommonModule,
@@ -40,6 +42,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     MatMenuModule,
     MatDialogModule,
     ReactiveFormsModule,
+    FlexLayoutModule
   ]
 })
 export class SharedModule { }

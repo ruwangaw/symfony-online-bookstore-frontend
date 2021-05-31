@@ -25,6 +25,7 @@ export class BooksStoreListComponent implements OnInit, OnDestroy {
   @Input() childCategory = null;
   books: BooksResponse[] = [];
   subscriptionOne: Subscription;
+  gridColumns = 3;
 
   constructor(
     private booksStoreService: BooksStoreService,
@@ -95,6 +96,10 @@ export class BooksStoreListComponent implements OnInit, OnDestroy {
 
   onClickRemoveFromShoppingCart(book){
     this.shoppingCartService.removeCartItem(book.id);
+  }
+
+  toggleGridColumns() {
+    this.gridColumns = this.gridColumns === 3 ? 4 : 3;
   }
 
 }

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
   ],
   exports:[
     SharedModule
