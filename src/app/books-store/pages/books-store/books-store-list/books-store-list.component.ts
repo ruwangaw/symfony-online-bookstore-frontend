@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ShoppingCartBooks } from 'src/app/books-store/models/shopping-cart-book';
 import { BooksRequest } from '../../../models/request/books-request';
 import { BooksResponse } from '../../../models/response/books-response';
 import { BooksStoreService } from '../../../services/books-store.service';
@@ -25,7 +26,12 @@ export class BooksStoreListComponent implements OnInit, OnDestroy {
   @Input() childCategory = null;
   books: BooksResponse[] = [];
   subscriptionOne: Subscription;
+  subscriptionTwo: Subscription;
   gridColumns = 3;
+  bookId:number;
+  isShoppingcartBtnDiabled:boolean = true;
+  shoppingCartBooks: ShoppingCartBooks[] = [];
+  totalBookCount: number = 0;
 
   constructor(
     private booksStoreService: BooksStoreService,
@@ -53,7 +59,9 @@ export class BooksStoreListComponent implements OnInit, OnDestroy {
     if (typeof this.subscriptionOne !== 'undefined') {
       this.subscriptionOne.unsubscribe();
     }
-
+    if (typeof this.subscriptionTwo !== 'undefined') {
+      this.subscriptionTwo.unsubscribe();
+    }
   }
 
    /**
@@ -69,6 +77,22 @@ export class BooksStoreListComponent implements OnInit, OnDestroy {
         this.shoppingCartService.getItems(data);
       }
     });
+  }
+
+  /**
+   * 
+   */
+  getShoppingCart() {
+
+    this.subscriptionTwo = this.shoppingCartService.cartState$.subscribe(cart => {
+      let totalBookCount = 0;
+      this.shoppingCartBooks = cart;
+      this.shoppingCartBooks.forEach(cart => {
+        totalBookCount += cart.bookCount;
+      });
+      this.totalBookCount = totalBookCount;
+    });
+    console.log(this.shoppingCartBooks);
   }
 
   /**

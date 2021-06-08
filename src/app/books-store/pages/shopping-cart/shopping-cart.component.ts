@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SessionStorageService } from 'ngx-webstorage';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -21,8 +22,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   netTotalAmmount: number = 0.00;
   cartSubscription: Subscription;
   shoppingCartBooks: ShoppingCartBooks[] = [];
+  isCheckoutBtnDisabled:boolean = true;
 
   constructor(
+    public dialogRef: MatDialogRef<ShoppingCartComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private shoppingCartService: ShoppingCartService,
     private sessionStorage: SessionStorageService
   ) { }
@@ -37,7 +41,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   getShoppingCart() {
     this.cartSubscription = this.shoppingCartService.cartState$.subscribe(cart => {
-      if (typeof cart !== 'undefined' && cart !== null) {
+      this.isCheckoutBtnDisabled = false;
+      if (typeof cart !== 'undefined' && cart !== null) {        
         this.shoppingCartBooks = cart;
         this.calculateShopingCartValues();
       }
@@ -51,15 +56,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   calculateShopingCartValues() {
     this.shoppingCartBooks.forEach(cartItem => {
       this.netTotalAmmount += cartItem.netBookAmount;
+      this.isCheckoutBtnDisabled = true;
     });
   }
 
   onClickRemoveItemFromCart(book) {
-
+    this.shoppingCartService.removeCartItem(book);
   }
 
   onEmptyCart() {
-
+    this.shoppingCartService.clearCart();
+    this.netTotalAmmount = 0;
   }
 
   onCheckoutCart() {

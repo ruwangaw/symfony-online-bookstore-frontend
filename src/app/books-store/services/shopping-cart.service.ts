@@ -31,9 +31,6 @@ export class ShoppingCartService {
     });
   }
 
-
-
-
   addCartItem(item: BooksResponse, itemCount = 1) {
     const shoppingCartNewItem = new ShoppingCartBooks();
     const bookItemPrice = parseFloat(item.price);
@@ -67,8 +64,37 @@ export class ShoppingCartService {
     console.log(shoppingCartBooks);
   }
   // facade for next of cartRemove subject
-  removeCartItem(id: number) {
+  removeCartItem(item: ShoppingCartBooks, itemCount = 1) {
+    const shoppingCartBooks = this.cartSubject.getValue();
+    const bookItemPrice = parseFloat(item.book.price);
 
+    if (shoppingCartBooks.length > 0) {
+      const cartBookId = shoppingCartBooks.findIndex(cartBook => {
+        return cartBook.book.id === item.book.id;
+      });
+
+      if (cartBookId > -1) {
+        const updatedOrderBook = shoppingCartBooks[cartBookId];
+        shoppingCartBooks[cartBookId].bookCount -= itemCount;
+        shoppingCartBooks[cartBookId].netBookAmount = shoppingCartBooks[cartBookId].bookCount * bookItemPrice;
+        const newOrderBooks = shoppingCartBooks.slice(0);
+        newOrderBooks[cartBookId] = { ...shoppingCartBooks[cartBookId], ...updatedOrderBook }
+      }
+      else{
+        shoppingCartBooks.splice(cartBookId, 1);
+      }
+    }
+    this.sessionStorage.store(environment.SESSION_STORAGE_SHOPPING_CART,JSON.stringify(shoppingCartBooks));
+    this.cartSubject.next(shoppingCartBooks);
+    console.log(shoppingCartBooks);
+  }
+
+  clearCart(){
+    let shoppingCartBooks = this.cartSubject.getValue();
+    shoppingCartBooks = [];
+    console.log(shoppingCartBooks);
+    this.sessionStorage.store(environment.SESSION_STORAGE_SHOPPING_CART,JSON.stringify(shoppingCartBooks));
+    this.cartSubject.next(shoppingCartBooks);
   }
 
   getBooks() {
@@ -82,6 +108,10 @@ export class ShoppingCartService {
 
   createShoppingCart(shoppingCartRequest:ShoppingCartRequest): Observable<ShoppingCartResponse> {
     return this._http.post<ShoppingCartResponse>(this.DATA_URL + "/shopping-cart/save", shoppingCartRequest) .pipe(catchError(error => of(error.url)));;
+  }
+
+  checkout(){
+
   }
 }
 

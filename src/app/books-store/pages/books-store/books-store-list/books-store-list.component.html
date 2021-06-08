@@ -12,7 +12,7 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <button mat-button color="warn" (click)="onClickRemoveFromShoppingCart(book)"><mat-icon>remove_shopping_cart</mat-icon></button>
+                    <button mat-button color="warn" [disabled]="isShoppingcartBtnDiabled" (click)="onClickRemoveFromShoppingCart(book)"><mat-icon>remove_shopping_cart</mat-icon></button>
                     <button mat-button color="normal" (click)="onClickviewBook(book)"><mat-icon>visibility</mat-icon></button>
                     <button mat-button color="primary" (click)="onClickAddToShoppingCart(book)"><mat-icon>add_shopping_cart</mat-icon></button>
                 </mat-card-actions>

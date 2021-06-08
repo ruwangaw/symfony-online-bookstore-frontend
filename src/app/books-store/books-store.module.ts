@@ -10,6 +10,8 @@ import { BooksStoreViewComponent } from './pages/books-store/books-store-view/bo
 import { BooksStoreSearchComponent } from './pages/books-store/books-store-search/books-store-search.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -28,7 +30,16 @@ import { LayoutComponent } from './pages/layout/layout.component';
     SharedModule,
   ],
   entryComponents: [
-    BookViewComponent
+    BookViewComponent,
+    ShoppingCartComponent
   ],
+  providers: [
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true},
+    },
+    { 
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }
+    }
+  ]
 })
 export class BooksStoreModule { }

@@ -14,6 +14,14 @@
     color: crimson;
 }
 
+.container {
+    position: relative;
+    height: auto !important;
+    min-height: 100%;
+    width: auto !important;
+    min-width: 100%;
+}
+
 .footer-toolbar {
     bottom: 0;
 }

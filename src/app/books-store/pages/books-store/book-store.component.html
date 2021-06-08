@@ -11,9 +11,9 @@
             </mat-menu>
         </div>
         <div>
-            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="onShoppingCartClick()">
+            <button mat-flat-button color="primary" role="button" [disabled]="totalBookCount < 1" (click)="onShoppingCartClick()">
                 <mat-icon>shopping_cart</mat-icon>
-            </button>
+                 Checkout {{ totalBookCount }} Item{{ totalBookCount > 1 ? 's' : '' }}</button>
         </div>
     </mat-toolbar>
     <!-- </div> -->

@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MstBooksCategoryResponse } from '../../models/response/mst-books-category-response';
+import { ShoppingCartBooks } from '../../models/shopping-cart-book';
 import { BooksStoreService } from '../../services/books-store.service';
 import { SharedService } from '../../services/shared.service';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-book-store',
@@ -20,17 +25,23 @@ export class BookStoreComponent implements OnInit {
 
   selectedCategory: MstBooksCategoryResponse;
   title: string = 'Symfony Online Books Store';
+  cartSubscription: Subscription;
   categories: MstBooksCategoryResponse[] = [];
+  shoppingCartBooks: ShoppingCartBooks[] = [];
+  totalBookCount: number = 0;
 
   constructor(
     private sharedService: SharedService,
     private booksStoreService: BooksStoreService,
+    private shoppingCartService: ShoppingCartService,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getMstBooksCategories();
+    this.getShoppingCart();
   }
 
   /**
@@ -57,8 +68,29 @@ export class BookStoreComponent implements OnInit {
     }
   }
 
-  onShoppingCartClick(){
-    this.router.navigate(['shopping-cart'])
+  onShoppingCartClick() {
+      const dialogRef = this.dialog.open(ShoppingCartComponent, {
+        width: '800px',
+        height: 'inherit',
+        disableClose: true,
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed',result);
+      });
+  }
+
+  getShoppingCart() {
+
+    this.cartSubscription = this.shoppingCartService.cartState$.subscribe(cart => {
+      let totalBookCount = 0;
+      this.shoppingCartBooks = cart;
+      this.shoppingCartBooks.forEach(cart => {
+        totalBookCount += cart.bookCount;
+      });
+      this.totalBookCount = totalBookCount;
+    });
+    console.log(this.shoppingCartBooks);
   }
 
 }
