@@ -41,7 +41,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   getShoppingCart() {
     this.cartSubscription = this.shoppingCartService.cartState$.subscribe(cart => {
-      this.isCheckoutBtnDisabled = false;
+      
       if (typeof cart !== 'undefined' && cart !== null) {        
         this.shoppingCartBooks = cart;
         this.calculateShopingCartValues();
@@ -50,13 +50,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.shoppingCartBooks = JSON.parse(this.sessionStorage.retrieve(environment.SESSION_STORAGE_SHOPPING_CART));
       }
     });
+    this.isCheckoutBtnDisabled = false;
     console.log(this.shoppingCartBooks);
   }
 
   calculateShopingCartValues() {
     this.shoppingCartBooks.forEach(cartItem => {
       this.netTotalAmmount += cartItem.netBookAmount;
-      this.isCheckoutBtnDisabled = true;
     });
   }
 
@@ -67,6 +67,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   onEmptyCart() {
     this.shoppingCartService.clearCart();
     this.netTotalAmmount = 0;
+    this.isCheckoutBtnDisabled = true;
   }
 
   onCheckoutCart() {

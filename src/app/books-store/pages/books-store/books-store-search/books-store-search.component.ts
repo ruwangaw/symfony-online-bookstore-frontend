@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-books-store-search',

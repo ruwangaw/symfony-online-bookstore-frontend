@@ -17,10 +17,10 @@
         </div>
     </mat-toolbar>
     <!-- </div> -->
-    <div fxFlex="100%" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center start">
-        <app-books-store-search fxLayout="row wrap" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start">
+    <div fxFlex="100%" fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center start">
+        <app-books-store-search fxLayout="column" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start">
         </app-books-store-search>
 
-        <app-books-store-list fxLayout="row wrap" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start" [childCategory]="selectedCategory"></app-books-store-list>
+        <app-books-store-list fxLayout="column" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center start" [childCategory]="selectedCategory"></app-books-store-list>
     </div>
 </section>
